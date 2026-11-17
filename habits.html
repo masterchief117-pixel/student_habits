@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <title>Student Hub | Habits</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/habits.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Student Hub home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>Student Hub</span>
+      </a>
+      <p class="header-caption">Make room for what matters.</p>
+    </header>
+
+    <nav class="module-nav" aria-label="Main navigation">
+      <a href="index.html">Timetable</a>
+      <a href="assignments.html">Assignments</a>
+      <a href="habits.html" aria-current="page">Habits</a>
+    </nav>
+
+    <main class="dashboard module-page">
+      <section id="habits-container" class="panel habits-panel" aria-labelledby="habits-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Small steps, steady progress</p>
+            <h1 id="habits-title">Habits</h1>
+          </div>
+        </div>
+
+        <form id="add-habit-form" class="habit-form">
+          <label class="field-label" for="habit-title">Habit name</label>
+          <input id="habit-title" name="title" type="text" maxlength="255" placeholder="e.g. Review lecture notes" required>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="field-label" for="habit-frequency">Frequency</label>
+              <select id="habit-frequency" name="frequency" required>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="habit-category">Category</label>
+              <select id="habit-category" name="category" required>
+                <option value="academic">Academic</option>
+                <option value="health">Health</option>
+                <option value="admin">Admin</option>
+                <option value="social">Social</option>
+              </select>
+            </div>
+          </div>
+          <button class="button button-primary button-full" type="submit">Add Habit</button>
+        </form>
+
+        <div class="habit-list-heading">
+          <h2>Your habits</h2>
+          <span class="list-caption">Check in for today</span>
+        </div>
+        <p id="habit-feedback" class="feedback-message" role="status" aria-live="polite" hidden></p>
+        <div id="habit-list" class="habit-list" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

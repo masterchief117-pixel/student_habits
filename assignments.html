@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <title>Student Hub | Assignments</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/assignments.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Student Hub home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>Student Hub</span>
+      </a>
+      <p class="header-caption">Make room for what matters.</p>
+    </header>
+
+    <nav class="module-nav" aria-label="Main navigation">
+      <a href="index.html">Timetable</a>
+      <a href="assignments.html" aria-current="page">Assignments</a>
+      <a href="habits.html">Habits</a>
+    </nav>
+
+    <main class="dashboard module-page">
+      <section id="assignments-container" class="panel assignments-panel" aria-labelledby="assignments-title">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Keep every deadline in sight</p><h1 id="assignments-title">Assignments</h1></div>
+          <button id="reminder-button" class="button button-secondary reminder-button" type="button" aria-haspopup="dialog">
+            Reminder / Unattended Tasks
+            <span id="reminder-count" class="reminder-count" aria-label="Pending assignments">0</span>
+          </button>
+        </div>
+
+        <form id="add-assignment-form" class="assignment-form">
+          <div class="form-field"><label class="field-label" for="unit_code">Unit code</label><input id="unit_code" name="unit_code" type="text" maxlength="50" placeholder="e.g. BIO101" required></div>
+          <div class="form-field"><label class="field-label" for="unit_name">Unit</label><input id="unit_name" name="unit_name" type="text" maxlength="255" placeholder="e.g. Biology" required></div>
+          <div class="form-field"><label class="field-label" for="task">Task</label><input id="task" name="task" type="text" maxlength="500" placeholder="e.g. Submit lab report" required></div>
+          <div class="form-field"><label class="field-label" for="due_date">Due date</label><input id="due_date" name="due_date" type="date" required></div>
+          <button class="button button-primary assignment-submit" type="submit">Add Assignment</button>
+        </form>
+
+        <p id="assignment-feedback" class="feedback-message" role="status" aria-live="polite" hidden></p>
+        <div class="assignment-table-scroll">
+          <table class="assignment-table">
+            <thead><tr><th scope="col">Unit Code</th><th scope="col">Unit</th><th scope="col">Task</th><th scope="col">Due Date</th><th scope="col">Status</th><th scope="col">Completed</th><th scope="col">Delete</th></tr></thead>
+            <tbody id="assignment-list" aria-live="polite"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <dialog id="reminder-dialog" class="reminder-dialog" aria-labelledby="reminder-dialog-title">
+        <div class="reminder-content">
+          <div class="dialog-heading">
+            <div><p class="eyebrow">A quick deadline check</p><h2 id="reminder-dialog-title">Unattended Tasks</h2></div>
+            <button id="close-reminder-button" class="icon-button" type="button" aria-label="Close dialog">×</button>
+          </div>
+          <p id="reminder-feedback" class="feedback-message" role="status" aria-live="polite" hidden></p>
+          <ul id="reminder-list" class="reminder-list" aria-live="polite"></ul>
+          <div class="dialog-actions"><button id="close-reminder-action" class="button button-secondary" type="button">Close</button></div>
+        </div>
+      </dialog>
+    </main>
+  </div>
+</body>
+</html>

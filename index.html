@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <title>Student Hub | Timetable</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/timetable.js" defer></script>
+  <script src="assets/js/quotes.js" defer></script>
+  <script src="assets/js/tools.js" defer></script>
+  <script src="assets/js/pomodoro.js" defer></script>
+  <script src="assets/js/bible.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Student Hub home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>Student Hub</span>
+      </a>
+      <p class="header-caption">Make room for what matters.</p>
+      <section id="pomodoro-widget" class="pomodoro-widget" aria-label="Pomodoro focus timer">
+        <div class="pomodoro-time-group">
+          <span id="pomodoro-time" class="pomodoro-time" aria-live="off">25:00</span>
+          <label class="sr-only" for="pomodoro-mode">Timer mode</label>
+          <select id="pomodoro-mode" class="pomodoro-mode">
+            <option value="work">Work</option>
+            <option value="short-break">Short Break</option>
+            <option value="long-break">Long Break</option>
+          </select>
+        </div>
+        <div class="pomodoro-actions">
+          <button id="pomodoro-start" class="pomodoro-button" type="button">Start</button>
+          <button id="pomodoro-pause" class="pomodoro-button pomodoro-pause" type="button" disabled>Pause</button>
+        </div>
+        <span id="pomodoro-status" class="sr-only" role="status" aria-live="polite"></span>
+      </section>
+    </header>
+
+    <div id="quote-wrapper" aria-live="polite">
+      <p id="quote-text"></p>
+      <span id="quote-author"></span>
+    </div>
+
+    <div id="daily-devotion-widget">
+      <h4>Daily Devotion</h4>
+      <div class="theme-selector-bar">
+        <label for="verse-theme-dropdown">Select Theme:</label>
+        <select id="verse-theme-dropdown">
+          <option value="Love">Love</option>
+          <option value="Faith">Faith</option>
+          <option value="Forgiveness">Forgiveness</option>
+          <option value="Repentance">Repentance</option>
+          <option value="Addiction">Addiction</option>
+          <option value="Temptation">Temptation</option>
+          <option value="Honesty and Truthfulness">Honesty and Truthfulness</option>
+          <option value="Poverty and Generosity">Poverty and Generosity</option>
+          <option value="Justice and Equality">Justice and Equality</option>
+          <option value="Obedience">Obedience</option>
+          <option value="Pride and Humility">Pride and Humility</option>
+          <option value="Suffering and Perseverance">Suffering and Perseverance</option>
+          <option value="Death and Eternal Life">Death and Eternal Life</option>
+          <option value="Marriage and Family">Marriage and Family</option>
+          <option value="Peace and Reconciliation">Peace and Reconciliation</option>
+        </select>
+      </div>
+      <button type="button" id="reveal-verse-btn" class="btn-primary" aria-expanded="false" aria-controls="devotion-content">Bible Verse</button>
+      <div id="devotion-content" style="display: none; max-height: 300px; overflow-y: auto; margin-top: 15px;" aria-live="polite">
+        <h5 id="devotion-ref">Loading...</h5>
+        <p id="devotion-text"></p>
+        <hr>
+        <h6>Explanation</h6>
+        <p id="devotion-explanation"></p>
+      </div>
+    </div>
+
+    <div id="academic-tools-bar" aria-label="Academic and development tools">
+      <a class="tool-shortcut" href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">▶</span><span>YouTube</span>
+      </a>
+      <a class="tool-shortcut" href="https://vscode.dev" target="_blank" rel="noopener noreferrer" aria-label="VS Code Web (opens in a new tab)">
+        <span class="tool-icon tool-icon-code" aria-hidden="true">&lt;/&gt;</span><span>VS Code</span>
+      </a>
+      <a class="tool-shortcut" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="ChatGPT (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">GPT</span><span>ChatGPT</span>
+      </a>
+      <a class="tool-shortcut" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Gemini AI (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">✦</span><span>Gemini</span>
+      </a>
+      <a class="tool-shortcut" href="https://search.brave.com" target="_blank" rel="noopener noreferrer" aria-label="Brave Search (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">B</span><span>Brave</span>
+      </a>
+      <a class="tool-shortcut" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">GH</span><span>GitHub</span>
+      </a>
+      <a class="tool-shortcut" href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">Gʂ</span><span>Scholar</span>
+      </a>
+      <a class="tool-shortcut" href="https://canva.com" target="_blank" rel="noopener noreferrer" aria-label="Canva (opens in a new tab)">
+        <span class="tool-icon" aria-hidden="true">C</span><span>Canva</span>
+      </a>
+      <button id="terminal-help-button" class="tool-shortcut terminal-shortcut" type="button" aria-haspopup="dialog">
+        <span class="tool-icon" aria-hidden="true">&gt;_</span><span>Git Bash</span>
+      </button>
+    </div>
+
+    <dialog id="terminal-help-dialog" class="terminal-help-dialog" aria-labelledby="terminal-help-title">
+      <div class="terminal-help-content">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Local desktop shortcut</p>
+            <h2 id="terminal-help-title">Open Git Bash / Terminal</h2>
+          </div>
+          <button id="close-terminal-help" class="icon-button" type="button" aria-label="Close dialog">×</button>
+        </div>
+        <p>Web browsers cannot launch desktop apps directly. To open Git Bash, press <kbd>Win</kbd> + <kbd>R</kbd>, type <code>git-bash</code>, then press Enter. In VS Code, press <kbd>Ctrl</kbd> + <kbd>`</kbd> to open its integrated terminal.</p>
+        <div class="dialog-actions">
+          <button class="button button-primary" id="close-terminal-help-action" type="button">Got it</button>
+        </div>
+      </div>
+    </dialog>
+
+    <nav class="module-nav" aria-label="Main navigation">
+      <a href="index.html" aria-current="page">Timetable</a>
+      <a href="assignments.html">Assignments</a>
+      <a href="habits.html">Habits</a>
+    </nav>
+
+    <main class="dashboard module-page">
+      <section id="timetable-container" class="panel timetable-panel" aria-labelledby="timetable-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Your week at a glance</p>
+            <h1 id="timetable-title">Timetable</h1>
+          </div>
+          <button class="button button-primary" id="add-activity-button" type="button">
+            <span aria-hidden="true">+</span> Add Activity
+          </button>
+        </div>
+
+        <div id="live-status-banner" class="live-status-banner" role="status" aria-live="polite">
+          Currently: No active class | Next: Loading timetable...
+        </div>
+        <div class="timetable-scroll">
+          <div id="weekly-timetable-grid" class="weekly-grid" role="grid" aria-label="Weekly timetable">
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Monday</h2><div class="day-events" role="gridcell" data-day="Monday"></div></div>
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Tuesday</h2><div class="day-events" role="gridcell" data-day="Tuesday"></div></div>
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Wednesday</h2><div class="day-events" role="gridcell" data-day="Wednesday"></div></div>
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Thursday</h2><div class="day-events" role="gridcell" data-day="Thursday"></div></div>
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Friday</h2><div class="day-events" role="gridcell" data-day="Friday"></div></div>
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Saturday</h2><div class="day-events" role="gridcell" data-day="Saturday"></div></div>
+            <div class="timetable-day" role="row"><h2 class="day-heading" role="columnheader">Sunday</h2><div class="day-events" role="gridcell" data-day="Sunday"></div></div>
+          </div>
+        </div>
+        <p class="panel-hint">Recurring activities stay in their day until you drop them.</p>
+        <p id="timetable-feedback" class="feedback-message" role="status" aria-live="polite" hidden></p>
+
+        <section id="activity-manager-list" class="activity-manager" aria-labelledby="activity-manager-title">
+          <div class="habit-list-heading">
+            <h2 id="activity-manager-title">Manage Activities / Drop List</h2>
+            <span class="list-caption">Remove an activity from your week</span>
+          </div>
+          <div class="activity-manager-scroll">
+            <table class="activity-manager-table">
+              <thead>
+                <tr>
+                  <th scope="col">Activity Name</th>
+                  <th scope="col">Day</th>
+                  <th scope="col">Time Range</th>
+                  <th scope="col">Manage</th>
+                </tr>
+              </thead>
+              <tbody id="activity-manager-rows" aria-live="polite"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <dialog id="activity-dialog" class="class-dialog" aria-labelledby="activity-dialog-title">
+          <form id="add-activity-form" class="class-form">
+            <div class="dialog-heading">
+              <div>
+                <p class="eyebrow">Plan your week</p>
+                <h2 id="activity-dialog-title">Add an activity</h2>
+              </div>
+              <button id="cancel-activity-button" class="icon-button" type="button" aria-label="Close dialog">×</button>
+            </div>
+            <label class="field-label" for="activity-name">Activity name</label>
+            <input id="activity-name" name="activity_name" type="text" maxlength="255" placeholder="e.g. Biology 101" required>
+            <div class="form-row">
+              <div class="form-field">
+                <span class="field-label">Days</span>
+                <div class="day-checkbox-group">
+                  <label><input type="checkbox" name="days" value="Monday"> Mon</label>
+                  <label><input type="checkbox" name="days" value="Tuesday"> Tue</label>
+                  <label><input type="checkbox" name="days" value="Wednesday"> Wed</label>
+                  <label><input type="checkbox" name="days" value="Thursday"> Thu</label>
+                  <label><input type="checkbox" name="days" value="Friday"> Fri</label>
+                  <label><input type="checkbox" name="days" value="Saturday"> Sat</label>
+                  <label><input type="checkbox" name="days" value="Sunday"> Sun</label>
+                </div>
+                <div class="activity-day-presets" role="group" aria-label="Quick select days">
+                  <button class="button button-secondary activity-day-preset" type="button" data-days-preset="weekdays">Weekdays (Mon-Fri)</button>
+                  <button class="button button-secondary activity-day-preset" type="button" data-days-preset="everyday">Everyday</button>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="activity-color">Color (optional)</label>
+                <input id="activity-color" name="color_code" type="color" value="#8e73f5">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label" for="activity-start">Start time</label>
+                <input id="activity-start" name="start_time" type="time" required>
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="activity-end">End time</label>
+                <input id="activity-end" name="end_time" type="time" required>
+              </div>
+            </div>
+            <div class="dialog-actions">
+              <button class="button button-secondary" id="cancel-activity-action" type="button">Cancel</button>
+              <button class="button button-primary" type="submit">Save Activity</button>
+            </div>
+          </form>
+        </dialog>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
